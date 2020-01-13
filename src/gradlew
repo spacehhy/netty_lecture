@@ -1,0 +1,26 @@
+
+ gradle wrapper  (gradle 包装器)  :详见gradle项目
+ 使得使用者在本地计算机上并没有安装gradle的前提下,依然可以通过简单命令实现对于gradle项目的构建
+gradlew 命令是: 似的使用者即便在本地安装,配置gradle的情况下 依然能够 通过命令实现项目构建
+
+shell 脚本  批处理文件
+
+gradle wrapper  相关命令
+
+gradle wrapper
+
+gradle wrapper  --gradle-version 3.5
+
+gradlew clean build  根据项目gradle版本构建
+
+gradle clean build 根据本机gradle版本构建
+
+了解 gradle wrapper 校验盒
+
+distributionSha256Sum=37c2fd......
+
+
+https://segmentfault.com/q/1010000017840144
+
+https://blog.csdn.net/itfootball/article/details/42638123
+

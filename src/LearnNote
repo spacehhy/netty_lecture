@@ -1,0 +1,137 @@
+学习的要点: 学习新技术一开始的时候切记切记不要陷入任何具体的细节当中,因为会极大的阻碍学习的速度,而且会对自信心产生极大的影响和干扰
+             netty框架本身 从设计角度和底层实现角度来看挺复杂的,一开始就研究整个的执行流程,相信会陷入细节,反而对netty本身提供的功能
+             关注的非常少了,不是好的做法,先把netty能做的几件事情,用代码的方式分别实现出来,让大家迅速对netty所能提供的功能以及所能完成的事情
+             有非常直观深刻的理解,从使用netty的角度必须掌握内容
+
+http协议 是一种无状态的 基于请求和响应模式的协议
+1.两次请求 无任何关系 不认为是,也不能识别是同一客户端  cookie  session  解决
+2.请求 一定是由客户端发送请求 服务端进行响应
+
+http 1.0 当服务器接收请求 并 返回响应后 连接断点 再请求 建立新连接
+http 1.1 增加新特性 keepalive 客户端与服务端在短时间保持连接(持续连接)  再指定时间内,重用既有连接
+
+Google 提出的 Http 2 支持长连接
+
+服务器 主动推送数据
+
+假的长连接技术
+1.轮询(客户端 每2秒 向服务器发起请求,检查服务器是否接受到新数据)
+2.commit 本质基于轮询
+问题
+1.消息,数据 不及时获得 准实时
+2.客户端 每经过一段时间发送请求  如果服务器端 无数据推送给客户端 这种操作是无意义的, 造成资源与网络带宽的浪费
+3.http协议 包含 header body  由于协议要求 大量的多余头信息 占据大量容量 超过内容本身
+
+html5 websocket规范   实现 浏览器 与 服务器端 真正意义上的长连接
+客户端 与 服务端 一旦建立连接 保持这个连接不断掉 并且成为对等实体  随意 互相 发送数据 实现服务器端 push技术
+初次建立长连接 发送头信息  一旦建立成功 只传递数据 不再传递头信息 节省了网络带宽
+
+升级版 http 协议   初次建立连接 是标准的http协议 只是在头信息中加入 websocket相关信息
+1.双向的数据传递  全双工消息传递
+2.基于http协议
+3.虽然基于http协议 也可以用在非浏览器场合 与服务器长连接  库 rocket socket  网页端 js就可以实现
+
+ws://server:port/context_path
+ws://localhost:9999/ws      示例的 /ws 指的是 最后的context_path
+
+rmi: remote method invocation  远程方法调用  只针对java    EJB???  https://blog.csdn.net/u011038738/article/details/79414256
+
+client  stub  装
+
+server  skeleton  骨架
+
+底层socket
+
+序列化与反序列化 也叫做: 编码与解码
+序列化: 将对象转化为字节  encode
+反序列化:将字节转化为对象 decode
+
+RPC:  Remote  Procedure Call  远程过程调用  很多RPC 框架是跨语言的
+
+1.定义一个接口说明文件:描述了对象(结构体)、对象成员、接口方法等一系列信息
+2.通过RPC框架所提供的编译器，将接口说明文件编译成具体语言文件
+3.在客户端与服务端分别引入RPC编译器所生成的文件，即可像调用本地方法一样调用远程方法
+
+
+protocol buffers
+
+
+gradle wrapper  (gradle 包装器)
+gradlew 命令是: 似的使用者即便在本地安装,配置gradle的情况下 依然能够 通过命令实现项目构建
+
+shell 脚本  批处理文件
+
+gradle wrapper  相关命令
+
+gradle wrapper
+
+gradle wrapper  --gradle-version 3.5
+
+gradlew clean build  根据项目gradle版本构建
+
+gradle clean build 根据本机gradle版本构建
+
+了解 gradle wrapper 校验盒
+
+distributionSha256Sum=37c2fd......
+
+
+https://segmentfault.com/q/1010000017840144
+
+https://blog.csdn.net/itfootball/article/details/42638123
+
+
+grpc 四种消息类型
+
+1.客户端发送消息  服务端收到 返回响应  (最简单,像方法调用)
+2..客户端发送数据 服务端返回 stream 流的形式  客户端检测什么时候流全部返回
+3.客户端不断向服务端发送stream 流  所有流发完之后 服务器返回结果
+4.客户端与服务端双向流传递  双向流在两个不同的stream里面 两个stream彼此独立
+  在每个通道内,流的顺序是确保的
+
+
+
+编解码:
+ASCII（American Standard Code for Information Interchange:美国信息交换标准代码）
+7 bit来表示一个字符,共计可以表示128种字符。(2^7) [0-127]
+
+ISO-8859-1
+8 bit来表示一个字符,即用1个字节(byte) (8 bit) 来表示一个字符。共计可以表示256种字符。(2^8) [128-255]
+
+gb2312 (国标)
+
+两个字节表示一个汉字。
+
+gbk (国标扩展,即加入生僻字)
+
+gb18030 (最完整的汉字的表示形式)
+
+big5 (繁体中文,宝岛台湾,大五码)
+
+unicode,采用了两个字节来表示一个字符。[\uXXXXX] 不适合存储,存在大量空间浪费
+
+UTF,Unicode Transformation Format
+
+unicode是一种编码方式,而UTF则是一种存储方式;UTF-8是Unicode的实现方式之一。
+UTF-32(用的很少),
+UTF-16(两个字节,定长的表示形式)
+UTF-16LE(little endian),UTF-16BE(big endian)
+
+Zero Width No-Break Space,0xFEFF(BE),0xFFFE(LE)
+[unicode规范当中,定义了这样的一种信息,对应磁盘上的每一个文件,在文件的最前面会加上一个字符,这个字符实际上并不可见,且不存在的字符,字符
+全称为 Zero Width No-Break Space: 零宽度不换行的空格,字符本身是不存在的,他会有一个相应的字符编码,用十六进制0xFEFF(BE);FE与FF相差1
+如果文件开头出现了0xFEFF的话,这种文件称为BE大端,反之0xFFFE这种文件称为LE小端;两个字节表示一个字符,显然也存在空间浪费]
+
+UTF-8（8-bit Unicode Transformation Format）,变长字节表示形式,根据不同的字符,采用存储的字节个数是不一样的,如果是英文字符
+
+
+
+
+
+
+
+
+
+
+
+
